@@ -1,0 +1,30 @@
+{
+    "xsappname": "microservices-app",
+    "tenant-mode": "dedicated",
+    "scopes": [
+      {
+        "name": "$XSAPPNAME.Admin",
+        "description": "Admin access"
+      },
+      {
+        "name": "$XSAPPNAME.User",
+        "description": "User access"
+      }
+    ],
+    "role-templates": [
+      {
+        "name": "AdminRole",
+        "description": "Administrator",
+        "scope-references": [
+          "$XSAPPNAME.Admin"
+        ]
+      },
+      {
+        "name": "UserRole",
+        "description": "User",
+        "scope-references": [
+          "$XSAPPNAME.User"
+        ]
+      }
+    ]
+  }

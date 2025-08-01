@@ -1,0 +1,44 @@
+_schema-version: '3.1'
+ID: microservices-app
+version: 1.0.0
+description: Microservices with shared database
+
+modules:
+  - name: shared-database-deployer
+    type: hdb
+    path: shared-database
+    build-parameters:
+      ignore: ["node_modules/"]
+    requires:
+      - name: shared-microservices-db
+
+  - name: order-service
+    type: nodejs
+    path: order-service
+    build-parameters:
+      ignore: ["node_modules/"]
+    provides:
+      - name: order-service-api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: shared-microservices-db
+
+  - name: customer-service
+    type: nodejs
+    path: customer-service
+    build-parameters:
+      ignore: ["node_modules/"]
+    provides:
+      - name: customer-service-api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: shared-microservices-db
+
+resources:
+  - name: shared-microservices-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared

@@ -1,0 +1,3 @@
+node_modules/@types/sap__cds
+node_modules/@cap-js/cds-types
+node_modules/**/*
