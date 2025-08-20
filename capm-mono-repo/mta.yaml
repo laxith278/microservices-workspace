@@ -1,0 +1,42 @@
+_schema-version: '3.2'
+ID: capm-mono-repo
+version: 0.0.1
+
+modules:
+  - name: service-a
+    type: nodejs
+    path: service-a
+    requires:
+      - name: shared-db
+  - name: service-b
+    type: nodejs
+    path: service-b
+    requires:
+      - name: shared-db
+  - name: capm-mono-repo-srv
+    type: nodejs
+    path: gen/srv
+    requires:
+      - name: capm-mono-repo-db
+      - name: shared-db
+
+  - name: capm-mono-repo-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: capm-mono-repo-db
+      - name: shared-db
+
+resources:
+  - name: shared-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: capm-mono-repo-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
